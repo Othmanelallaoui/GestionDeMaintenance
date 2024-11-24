@@ -49,10 +49,10 @@
 <nav>
     <ul>
         <li><img src="<?php echo base_url('images/logo.png') ?>" alt="logo"></li>
-        <li><a href="dashboard">Accueille</a></li>
+        <li><a href="/admin/dashboard">Accueille</a></li>
         <li><a href="/admin/gestion_technicien">Gestion Techniciens</a></li>
         <li><a href="#news">Gestion des demandes</a></li>
-        <li><a href="#contact">Gestion des Clients</a></li>
+        <li><a href="/admin/gestion_client">Gestion des Clients</a></li>
         <li><a href="#contact">Reclamations</a></li>
 
         <li style="float:right"><a class="active" href="/logout">logout</a></li>

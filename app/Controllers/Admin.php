@@ -6,18 +6,35 @@ use App\Models\UserModel;
 
 class Admin extends BaseController
 {
-
     public function index()
     {
         if (!session()->get('is_logged_in') || session()->get('role') !== 'administrateur') {
             return redirect()->to('/login');
         }
-        return view('admin/dashboard');
-    }
-    public function profil(){
-        return view('admin/profilAdmin');
+
+        // Charger le modèle UserModel
+        $userModel = new UserModel();
+
+        // Compter les utilisateurs par rôle
+        $nombreClients = $userModel->where('role', 'client')->countAllResults();
+        $nombreTechniciens = $userModel->where('role', 'technicien')->countAllResults();
+        $nombreAdmins = $userModel->where('role', 'administrateur')->countAllResults();
+
+        // Passer les données à la vue
+        $data = [
+            'nombreClients' => $nombreClients,
+            'nombreTechniciens' => $nombreTechniciens,
+            'nombreAdmins' => $nombreAdmins
+        ];
+
+        return view('admin/dashboard', $data);
     }
 
+    public function profil()
+    {
+        return view('admin/profilAdmin');
+    }
+    //----------------------Techniciens---------------------
     public function gestion_technicien()
     {
         if (!session()->get('is_logged_in') || session()->get('role') !== 'administrateur') {
@@ -88,7 +105,7 @@ class Admin extends BaseController
             $CIN = $this->request->getPost('CIN');
             $nom = strtoupper($this->request->getPost('nom'));
 
-            $defaultPassword = password_hash("{$nom}@{$CIN}", PASSWORD_DEFAULT);
+            $defaultPassword = password_hash("{$nom}@{$CIN}", PASSWORD_BCRYPT);
 
             $data = [
                 'CIN' => $CIN,
@@ -118,7 +135,7 @@ class Admin extends BaseController
             return redirect()->back()->with('error', 'Utilisateur non trouvé');
         }
 
-        $newPassword = bin2hex(random_bytes(4)); 
+        $newPassword = bin2hex(random_bytes(4));
         $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
 
         $userModel->update($id, ['password' => $hashedPassword]);
@@ -143,5 +160,17 @@ class Admin extends BaseController
             log_message('error', $emailService->printDebugger(['headers', 'subject', 'body']));
             return redirect()->to('/admin/gestion_technicien')->with('error', 'Le mot de passe a été réinitialisé, mais l\'email n\'a pas pu être envoyé.');
         }
+    }
+
+
+    //-----------------------gestion Clients-----------------------
+    public function gestion_client()
+    {
+        if (!session()->get('is_logged_in') || session()->get('role') !== 'administrateur') {
+            return redirect()->to('/login');
+        }
+        $userModel = new UserModel();
+        $clients = $userModel->where('role', 'client')->findAll();
+        return view('admin/gestion_clients', ['clients' => $clients]);
     }
 }

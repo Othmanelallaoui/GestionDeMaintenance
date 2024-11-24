@@ -1,5 +1,6 @@
 .affiche {
     padding: 30px;
+    scroll-behavior: auto;
 }
 
 .table-style {
@@ -8,16 +9,40 @@
     margin-top: 20px;
     border: 1px solid #e0e0e0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #ffffff; 
+    background-color: #ffffff;
 
 }
 
 .table-style th,
 .table-style td {
-    padding: 12px;
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 10px;
     text-align: left;
     border-bottom: 1px solid #f0f0f0;
 }
+
+.table-style :nth-child(1),.table-style th :nth-child(1) {
+    width: 80px;
+}
+
+.table-style :nth-child(2),.table-style th :nth-child(2) {
+    width: 80px;
+}
+
+.table-style :nth-child(3),.table-style th :nth-child(3) {
+    width: 80px;
+}
+
+.table-style :nth-child(4),.table-style th :nth-child(4) {
+    width: 160px;
+}
+.table-style :nth-child(5),.table-style th :nth-child(5) {
+    width: 100px;
+}
+
 
 .table-style th {
     background-color: #f0f0f0;
@@ -50,7 +75,7 @@
     display: inline-block;
     padding: 8px 6px;
     font-size: 14px;
-    
+
     text-align: center;
     color: white;
     background-color: #6F4E37;
@@ -104,4 +129,19 @@
 
 .btn-ok:hover {
     background-color: #9E7D56;
+}
+
+.sersh {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+
+}
+
+.sersh input[type="text"] {
+    width: 300px;
+    padding: 8px 10px;
+    margin: 0 30px 0 10px;
+    border-radius: 6px;
+    border: none
 }
