@@ -3,18 +3,40 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use App\Models\DemandeModel;
 
 class Technicien extends BaseController
 {
     public function index()
     {
+        // Vérification de l'authentification et du rôle
         if (!session()->get("is_logged_in")) {
             return redirect()->to("/login");
         } elseif (session()->get("role") !== "technicien") {
             return redirect()->to("/login");
-        } else {
-            return view('technicien/dashboard');
         }
+
+
+        $demandeModel = new DemandeModel();
+
+        $technicienId = session()->get("user_id");
+
+        $userModel = new UserModel();
+        $technicien = $userModel->find($technicienId);
+        $disponibilite = $technicien['disponibilite'];
+
+        $nombreTaches = $demandeModel
+            ->where('id_technicien', $technicienId)
+            ->countAllResults();
+
+        $data = [
+            'nombreTaches' => $nombreTaches,
+            'id_user' => $technicienId,
+            'dispo' => $disponibilite,
+            'user' => $technicien,
+        ];
+
+        return view('technicien/dashboard', $data);
     }
 
     public function update($id)
@@ -81,6 +103,7 @@ class Technicien extends BaseController
             'prenom' => $prenom,
             'email' => $email,
             'phone' => $phone,
+            'disponibilite' => 'disponibilite',
         ];
 
         $userModel->update($id, $data);
@@ -110,4 +133,91 @@ class Technicien extends BaseController
 
         return view('admin/edit_technicien', ['technicien' => $technicien]);
     }
+
+
+
+
+    //--------mesTaches---------
+
+    public function mes_taches()
+    {
+        $demandeModel = new DemandeModel();
+    
+        $technicienId = session()->get("user_id");
+    
+        $taches = $demandeModel
+            ->where('id_technicien', $technicienId)  
+            ->where('statut', 'en cours')             
+            ->findAll();                             
+    
+        $data = [
+            'taches' => $taches,
+        ];
+    
+        return view('technicien/mes_taches', $data);
+    }
+    
+
+    public function modifierDisponibilite()
+    {
+        $userModel = new UserModel();
+
+        $id_user = $this->request->getPost('id_user');
+        $nouvelleDispo = $this->request->getPost('dispo');
+
+        // Vérifier si les données nécessaires sont présentes
+        if (empty($id_user) || $nouvelleDispo === null) {
+            return redirect()->back()->with('error', 'Données invalides ou manquantes.');
+        }
+
+        // Mettre à jour la disponibilité dans la base de données
+        try {
+            $updateSuccess = $userModel->update($id_user, ['disponibilite' => $nouvelleDispo]);
+
+            if ($updateSuccess) {
+                // Si la mise à jour réussit
+                return redirect()->back()->with('message', 'Disponibilité mise à jour avec succès.');
+            } else {
+                // Si la mise à jour échoue
+                return redirect()->back()->with('error', 'Erreur lors de la mise à jour de la disponibilité.');
+            }
+        } catch (\Exception $e) {
+            // Gestion des exceptions
+            return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
+        }
+    }
+
+    public function terminer_tache($id)
+    {
+        $demandeModel = new DemandeModel();
+    
+        $demande = $demandeModel->find($id);
+    
+        if (!$demande) {
+            return redirect()->back()->with('error', 'Impossible de terminer la demande.');
+        }
+    
+        $demandeModel->update($id, ['statut' => 'Terminée']);
+    
+        return redirect()->to('/technicien/mes_taches')->with('success', 'Demande terminée avec succès.');
+    }
+    public function mes_taches_terminées()
+{
+    $demandeModel = new DemandeModel();
+
+    $technicienId = session()->get("user_id");
+
+    $tachesTerminees = $demandeModel
+        ->where('id_technicien', $technicienId)
+        ->where('statut', 'terminée')  
+        ->findAll();
+
+    $data = [
+        'taches' => $tachesTerminees,
+    ];
+
+    return view('technicien/taches_terminer', $data);
+}
+
+    
 }

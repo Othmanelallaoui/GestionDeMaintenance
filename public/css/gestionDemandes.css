@@ -1,20 +1,47 @@
-.affiche {
-    padding: 30px;
-    scroll-behavior: auto;
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
 }
 
-.table-style {
+body {
+    background-color: #E4E0E1;
+}
+
+.container {
+    padding: 30px;
+}
+
+/* Style pour le bouton Archives */
+.btn-archive {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 14px;
+    text-align: center;
+    color: white;
+    background-color: #6F4E37;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-archive:hover {
+    background-color: #9E7D56;
+}
+
+/* Table styles */
+.demandes-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
     border: 1px solid #e0e0e0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #ffffff;
-
 }
 
-.table-style th,
-.table-style td {
+.demandes-table th,
+.demandes-table td {
     width: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -24,66 +51,50 @@
     border-bottom: 1px solid #f0f0f0;
 }
 
-.table-style :nth-child(1),.table-style th :nth-child(1) {
+.demandes-table :nth-child(1), .demandes-table th :nth-child(1) {
     width: 80px;
 }
 
-.table-style :nth-child(2),.table-style th :nth-child(2) {
+.demandes-table :nth-child(2), .demandes-table th :nth-child(2) {
     width: 80px;
 }
 
-.table-style :nth-child(3),.table-style th :nth-child(3) {
+.demandes-table :nth-child(3), .demandes-table th :nth-child(3) {
     width: 80px;
 }
 
-.table-style :nth-child(4),.table-style th :nth-child(4) {
+.demandes-table :nth-child(4), .demandes-table th :nth-child(4) {
     width: 160px;
 }
-.table-style :nth-child(5),.table-style th :nth-child(5) {
+
+.demandes-table :nth-child(5), .demandes-table th :nth-child(5) {
     width: 100px;
 }
 
-
-.table-style th {
+.demandes-table th {
     background-color: #f0f0f0;
     color: #333;
     font-weight: bold;
 }
 
-.table-style tr:hover {
+.demandes-table tr:hover {
     background-color: #fafafa;
 }
 
-.table-style a {
+.demandes-table a {
     color: #0056b3;
     text-decoration: none;
 }
 
-.table-style a:hover {
+.demandes-table a:hover {
     text-decoration: underline;
 }
 
-.table-style td {
+.demandes-table td {
     vertical-align: middle;
 }
 
-.btn {
-    display: inline-block;
-    padding: 8px 6px;
-    font-size: 14px;
-
-    text-align: center;
-    color: white;
-    background-color: #6F4E37;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-    background-color: #9E7D56;
-}
-
+/* Overlay for messages (for any confirmation messages or dialogs) */
 .message-overlay {
     position: fixed;
     top: 0;
@@ -127,11 +138,11 @@
     background-color: #9E7D56;
 }
 
+/* Search input style */
 .sersh {
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
-
 }
 
 .sersh input[type="text"] {
@@ -139,6 +150,20 @@
     padding: 12px 10px;
     margin: 0 30px 0 10px;
     border-radius: 6px;
-    border: none
+    border: none;
 }
 
+.sersh {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sersh input[type="text"] {
+    width: 300px;
+    padding: 12px 10px;
+    margin: 0 10px;
+    border-radius: 6px;
+    border: none;
+}

@@ -1,0 +1,197 @@
+/* Style général de la page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+/* Liste des demandes */
+.demandes-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.demande-item {
+    background-color: #f9f9f9;
+    border-left: 5px solid #ccc;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+    width: 100%;
+}
+
+.demande-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Styles dynamiques des statuts */
+.demande-item.en-attente {
+    border-left-color: #f39c12;
+    /* Orange */
+    background-color: #fffbea;
+}
+
+.demande-item.en-cours {
+    border-left-color: #4caf50;
+    /* Vert */
+    background-color: #eaffea;
+}
+
+.demande-item.refusée {
+    border-left-color: #e74c3c;
+    background-color: #ffeaea;
+}
+
+.demande-item.terminée {
+    border-left-color: #3498db;
+    /* Bleu */
+    background-color: #eaf4ff;
+}
+
+/* Titre et texte des demandes */
+.demande-item h2 {
+    margin: 0;
+    color: #333;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.demande-item p {
+    margin: 10px 0;
+    color: #555;
+    font-size: 16px;
+}
+
+/* Statut aligné à droite */
+.demande-item .statut {
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+    text-align: right;
+    align-self: flex-end;
+}
+
+/* Bouton retour */
+.back-button {
+    display: inline-block;
+    margin: 20px 0;
+    padding: 12px 24px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.back-button:hover {
+    background-color: #45a049;
+}
+
+.back-button:active {
+    background-color: #388e3c;
+}
+
+/* Style du conteneur de filtre */
+.filter-container {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#statusFilter {
+    padding: 10px 18px;
+    font-size: 16px;
+    border: 2px solid #4CAF50;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#statusFilter:hover {
+    border-color: #45a049;
+    box-shadow: 0 0 10px rgba(0, 128, 0, 0.2);
+}
+
+#statusFilter:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+}
+
+/* Style pour les options */
+#statusFilter option {
+    padding: 10px;
+    background-color: #fff;
+    font-size: 16px;
+}
+
+
+
+
+span.success p {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
+}
+
+.filter-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.annuler-btn {
+    color: white;
+    background-color: red;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.annuler-btn:hover {
+    background-color: darkred;
+}
+
+.lastrow {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+}

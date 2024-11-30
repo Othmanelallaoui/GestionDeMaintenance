@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <?= view('layout/navbar'); ?>
+    <?= view('layout/navbarCli'); ?>
 
 </body>
 

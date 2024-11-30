@@ -15,7 +15,7 @@
             <div class="message-overlay">
                 <div class="message-box">
                     <p><?= session()->getFlashdata('success'); ?></p>
-                    <form method="post" action="/admin/gestion_client">
+                    <form method="post" action="/admin/gestion_clients">
                         <button type="submit" class="btn-ok">OK</button>
                     </form>
                 </div>
@@ -26,7 +26,7 @@
             <div class="message-overlay">
                 <div class="message-box">
                     <p><?= session()->getFlashdata('error'); ?></p>
-                    <form method="post" action="/admin/gestion_client">
+                    <form method="post" action="/admin/gestion_clients">
                         <button type="submit" class="btn-ok">OK</button>
                     </form>
                 </div>
@@ -65,7 +65,7 @@
                         <td><?= esc($client['phone']); ?></td>
                         <td>
                             <a href="/client/edit/<?= esc($client['id']); ?>">Modifier</a> |
-                            <a href="/client/delete/<?= esc($client['id']); ?>">Supprimer</a> |
+                            <a href="/client/delete/<?= esc($client['id']); ?>">Supprimer</a> 
                         </td>
                     </tr>
                 <?php endforeach; ?>

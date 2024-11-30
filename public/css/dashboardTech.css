@@ -1,0 +1,88 @@
+
+    h1 {
+        text-align: center;
+        color: #1565C0; /* Bleu vif */
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .cont {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px 30px;
+        margin: 20px 0;
+        width: 100%;
+        max-width: 600px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    } */
+
+    .card p {
+        font-size: 1rem;
+        color: #333;
+        margin: 10px 0;
+    }
+
+    .highlight {
+        color: #2E7D32; /* Vert foncé */
+        font-weight: bold;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+
+    label {
+        font-size: 1rem;
+        color: #555;
+    }
+
+    select {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 6px;
+        border: 1px solid #ddd;
+        font-size: 1rem;
+    }
+
+    button {
+        background-color: #1565C0; /* Bleu vif */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0d47a1; /* Bleu plus foncé */
+    }
+
+    @media (max-width: 768px) {
+        .card {
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        button {
+            width: 100%;
+            font-size: 1rem;
+        }
+    }

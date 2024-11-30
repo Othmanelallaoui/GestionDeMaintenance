@@ -1,0 +1,75 @@
+/* Container for the profile page profilCli*/ 
+.container {
+    width: 60%; 
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #f4e1c1; /* Marron clair/crème */
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+h2 {
+    text-align: center;
+    color: #5d4037; /* Marron foncé */
+    font-size: 24px;
+}
+
+/* Profile info text */
+.profile-info p {
+    font-size: 16px;
+    margin: 8px 0;
+    color: #6d4c41; /* Marron moyen */
+}
+
+/* Button Container */
+.action-buttons {
+    margin: 20px auto;
+    width: 200px;
+    text-align: center;
+}
+
+.action-buttons .btn-edit {
+    background-color: #8d6e63; 
+    color: white;
+    padding: 10px 16px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none;
+
+}
+
+.action-buttons .btn-edit:hover {
+    background-color: #7b5e57; 
+}
+
+form .form-group {
+    margin-bottom: 20px;
+}
+
+form input {
+    width: 96%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #a1887f; 
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input:focus {
+    border-color: #8d6e63; 
+    box-shadow: 0 0 5px rgba(141, 110, 99, 0.3);/* Ombre douce marron */
+}
+
+
+
+form button:hover {
+    background-color: #7b5e57; 
+}

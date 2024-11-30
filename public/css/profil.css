@@ -1,30 +1,30 @@
+/* Style global pour la page */
 .container {
-    width: 60%;
-    margin: 60px auto;
-    background-color: #fff;
+    width: 50%; 
+    margin: 30px auto;
     padding: 20px;
+    background-color: #a09d9d35;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
 }
 
-h1 {
+h2 {
     text-align: center;
     color: #333;
 }
 
 .profile-info {
-    margin-top: 20px;
+    margin-top: 6px;
 }
 
 .profile-info p {
-    font-size: 16px;
-    margin: 10px 0;
+    font-size: 14px;
+    margin: 6px 0;
 }
 
 .action-buttons {
-    margin-top: 30px;
-    text-align: center;
+    margin: 10px auto;
+    width: 150px;
 }
 
 .action-buttons .btn-edit {
@@ -34,8 +34,43 @@ h1 {
     text-decoration: none;
     border-radius: 5px;
     font-size: 16px;
+    display: inline-block;
 }
 
 .action-buttons .btn-edit:hover {
     background-color: #45a049;
+}
+
+form .form-group {
+    margin-bottom: 15px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form input {
+    width: 96%;
+    padding: 8px;
+    margin-top: 3px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+form button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px; 
+}
+
+form button:hover {
+    background-color: #0056b3;
 }

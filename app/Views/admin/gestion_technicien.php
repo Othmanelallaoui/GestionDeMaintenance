@@ -52,6 +52,7 @@
                     <th>Nom</th>
                     <th>Prénom</th>
                     <th>Email</th>
+                    <th>Statut</th>
                     <th>Téléphone</th>
                     <th>Actions</th>
                 </tr>
@@ -63,10 +64,12 @@
                         <td><?= esc($technicien['nom']); ?></td>
                         <td><?= esc($technicien['prenom']); ?></td>
                         <td><?= esc($technicien['email']); ?></td>
+                        <td><?= esc($technicien['disponibilite']); ?></td>
+
                         <td><?= esc($technicien['phone']); ?></td>
                         <td>
-                            <a href="/technicien/edit/<?= esc($technicien['id']); ?>">Modifier</a> |
-                            <a href="/technicien/delete/<?= esc($technicien['id']); ?>">Supprimer</a> |
+                            <!-- <a href="/technicien/edit/<?= esc($technicien['id']); ?>">Modifier</a> |
+                            <a href="/technicien/delete/<?= esc($technicien['id']); ?>">Supprimer</a> | -->
                             <a href="/admin/reset_password/<?= esc($technicien['id']); ?>" class="btn-warning">Réinitialiser mot de passe</a>
                         </td>
                     </tr>

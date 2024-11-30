@@ -5,81 +5,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tableau de Bord Administrateur</title>
-    <link rel="stylesheet" href="<?= base_url('css/dashboard.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/dashboardAdmin.css') ?>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 </head>
 
 <body>
     <?= view('layout/navbarAdmin'); ?>
 
     <div class="container">
-        <h1>Tableau de Bord</h1>
+        <h1>Tableau de Bord Administrateur</h1>
 
         <div class="stats-container">
-            <div class="stat-box clients">
+            <div class="stat-card clients">
+                <i class="fas fa-users fa-3x"></i>
                 <h2>Clients</h2>
                 <p><?= $nombreClients; ?></p>
             </div>
-            <div class="stat-box techniciens">
+
+            <div class="stat-card techniciens">
+                <i class="fas fa-user-cog fa-3x"></i>
                 <h2>Techniciens</h2>
                 <p><?= $nombreTechniciens; ?></p>
             </div>
-            <div class="stat-box admins">
+
+            <div class="stat-card techniciens-dispo">
+                <i class="fas fa-check-circle fa-3x"></i>
+                <h2>Disponibles</h2>
+                <p><?= $nombreTechniciensDispo; ?></p>
+            </div>
+
+            <div class="stat-card techniciens-indispo">
+                <i class="fas fa-times-circle fa-3x"></i>
+                <h2>Indisponibles</h2>
+                <p><?= $nombreTechniciensIndispo; ?></p>
+            </div>
+
+            <div class="stat-card admins">
+                <i class="fas fa-user-shield fa-3x"></i>
                 <h2>Administrateurs</h2>
                 <p><?= $nombreAdmins; ?></p>
             </div>
+
+            <!-- Cartes des demandes -->
+            <div class="stat-card demandes-attente">
+                <i class="fas fa-clock fa-3x"></i>
+                <h2>Demandes en Attente</h2>
+                <p><?= $nombreDemandesEnAttente; ?></p>
+            </div>
+
+            <div class="stat-card demandes-cours">
+                <i class="fas fa-spinner fa-3x"></i>
+                <h2>Demandes en Cours</h2>
+                <p><?= $nombreDemandesEnCours; ?></p>
+            </div>
+
+            <div class="stat-card demandes-terminees">
+                <i class="fas fa-check fa-3x"></i>
+                <h2>Demandes Terminées</h2>
+                <p><?= $nombreDemandesTerminees; ?></p>
+            </div>
+           
         </div>
     </div>
-
-    <!-- Style CSS pour le tableau de bord -->
-    <style>
-        .container {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .stats-container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .stat-box {
-            width: 200px;
-            padding: 20px;
-            border-radius: 15px;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-        }
-
-        .stat-box:hover {
-            transform: translateY(-5px);
-        }
-
-        .clients {
-            background-color: #6F4E37;  /* Marron */
-        }
-
-        .techniciens {
-            background-color: #5A9BD5; /* Bleu */
-        }
-
-        .admins {
-            background-color: #70AD47;  /* Vert */
-        }
-
-        .stat-box h2 {
-            margin-bottom: 10px;
-            font-size: 20px;
-        }
-
-        .stat-box p {
-            font-size: 28px;
-            font-weight: bold;
-        }
-    </style>
 </body>
 
 </html>

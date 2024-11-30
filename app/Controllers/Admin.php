@@ -3,28 +3,40 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use App\Models\DemandeModel;
 
 class Admin extends BaseController
 {
+
     public function index()
     {
         if (!session()->get('is_logged_in') || session()->get('role') !== 'administrateur') {
             return redirect()->to('/login');
         }
 
-        // Charger le modèle UserModel
-        $userModel = new UserModel();
 
-        // Compter les utilisateurs par rôle
+        $userModel = new UserModel();
+        $demandeModel = new DemandeModel();
+
         $nombreClients = $userModel->where('role', 'client')->countAllResults();
         $nombreTechniciens = $userModel->where('role', 'technicien')->countAllResults();
         $nombreAdmins = $userModel->where('role', 'administrateur')->countAllResults();
+        $nombreTechniciensDispo = $userModel->where('role', 'technicien')->where('disponibilite', 'disponible')->countAllResults();
+        $nombreTechniciensIndispo = $userModel->where('role', 'technicien')->where('disponibilite', 'indisponible')->countAllResults();
 
-        // Passer les données à la vue
+        $nombreDemandesEnAttente = $demandeModel->where('statut', 'en attente')->countAllResults();
+        $nombreDemandesEnCours = $demandeModel->where('statut', 'en cours')->countAllResults();
+        $nombreDemandesTerminees = $demandeModel->where('statut', 'terminée')->countAllResults();
+
         $data = [
             'nombreClients' => $nombreClients,
             'nombreTechniciens' => $nombreTechniciens,
-            'nombreAdmins' => $nombreAdmins
+            'nombreTechniciensDispo' => $nombreTechniciensDispo,
+            'nombreTechniciensIndispo' => $nombreTechniciensIndispo,
+            'nombreAdmins' => $nombreAdmins,
+            'nombreDemandesEnAttente' => $nombreDemandesEnAttente,
+            'nombreDemandesEnCours' => $nombreDemandesEnCours,
+            'nombreDemandesTerminees' => $nombreDemandesTerminees,
         ];
 
         return view('admin/dashboard', $data);
@@ -32,11 +44,15 @@ class Admin extends BaseController
 
     public function profil()
     {
+        if (!session()->get('is_logged_in') || session()->get('role') !== 'administrateur') {
+            return redirect()->to('/login');
+        }
         return view('admin/profilAdmin');
     }
     //----------------------Techniciens---------------------
     public function gestion_technicien()
     {
+
         if (!session()->get('is_logged_in') || session()->get('role') !== 'administrateur') {
             return redirect()->to('/login');
         }
@@ -51,6 +67,7 @@ class Admin extends BaseController
         }
         return view('admin/ajouter_technicien');
     }
+
     public function store_technicien()
     {
         if (!session()->get('is_logged_in') || session()->get('role') !== 'administrateur') {
@@ -145,9 +162,11 @@ class Admin extends BaseController
         $emailService->setTo($technicien['email']);
         $emailService->setSubject('Réinitialisation de votre mot de passe');
         $message = "
+
         Bonjour Mr. <u>{$technicien['nom']}</u>,        
         Votre mot de passe a été réinitialisé avec succès. Votre nouveau mot de passe est :<b>  {$newPassword}</b>        
         <br/>Nous vous recommandons de le modifier dès votre première connexion.
+        role:<u>{$technicien['role']}</u>
         <br/>Cordialement,
         <br/>Centre d'excelenace FSA ";
 
@@ -164,7 +183,7 @@ class Admin extends BaseController
 
 
     //-----------------------gestion Clients-----------------------
-    public function gestion_client()
+    public function gestion_clients()
     {
         if (!session()->get('is_logged_in') || session()->get('role') !== 'administrateur') {
             return redirect()->to('/login');
@@ -172,5 +191,76 @@ class Admin extends BaseController
         $userModel = new UserModel();
         $clients = $userModel->where('role', 'client')->findAll();
         return view('admin/gestion_clients', ['clients' => $clients]);
+    }
+
+    //------------gestion demandes------------
+    public function gestion_Demandes()
+    {
+        // Vérifie si l'utilisateur est connecté et s'il est un administrateur
+        if (!session()->get('is_logged_in') || session()->get('role') !== 'administrateur') {
+            return redirect()->to('/login');
+        }
+
+        $demandeModel = new DemandeModel();
+
+        // Récupère toutes les demandes en excluant les statuts 'Annulée', 'Terminée', 'Refusée'
+        $demandesFiltrees = $demandeModel->getDemandesWithDetails();
+
+        // Retourne la vue avec les demandes filtrées
+        return view('admin/gestion_demandes', ['Demandes' => $demandesFiltrees]);
+    }
+
+    public function archive_Demandes()
+    {
+        // Vérifie si l'utilisateur est connecté et s'il est un administrateur
+        if (!session()->get('is_logged_in') || session()->get('role') !== 'administrateur') {
+            return redirect()->to('/login');
+        }
+    
+        $demandeModel = new DemandeModel();
+    
+        // Récupérer uniquement les demandes avec les statuts 'Annulée', 'Terminée', 'Refusée'
+        $demandesArchives = $demandeModel->getDemandesWithSpecificStatuses();
+    
+        // Retourner la vue avec les demandes archivées
+        return view('admin/demandes_archives', ['Demandes' => $demandesArchives]);
+    }
+    
+
+
+    public function assigner_taches()
+    {
+        $userModel = new UserModel();  // Assurez-vous que le modèle UserModel est importé
+        $demandeModel = new DemandeModel();  // Assurez-vous que le modèle DemandeModel est importé
+
+        // Récupérer les techniciens disponibles
+        $techniciens = $userModel->getTechniciensDisponibilite('disponible');
+
+        // Récupérer les demandes en attente
+        $demandes = $demandeModel->where('statut', 'en attente')->findAll();
+
+        return view('admin/assigner_taches', [
+            'techniciens' => $techniciens,
+            'demandes' => $demandes
+        ]);
+    }
+
+    public function assigner_tache()
+    {
+        $userModel = new UserModel();
+        $demandeModel = new DemandeModel();
+
+        $technicien_id = $this->request->getPost('technicien_id');
+        $demande_id = $this->request->getPost('demande_id');
+
+        $userModel->update($technicien_id, ['disponibilite' => 'INDISPONIBLE']);
+
+        // Mettre à jour le statut de la demande et associer le technicien
+        $demandeModel->update($demande_id, [
+            'statut' => 'en cours',
+            'id_technicien' => $technicien_id
+        ]);
+
+        return redirect()->to('/admin/assigner_taches_technicien')->with('success', 'Tâche assignée avec succès !');
     }
 }
